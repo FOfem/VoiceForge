@@ -1,9 +1,22 @@
-# MANIFEST.in
+# Include all necessary files
 include README.md
 include LICENSE
 include pyproject.toml
 include setup.py
+
+# Include source code
+recursive-include src *.py
+recursive-include src/resources *
+
+# Include build files
 include installer.iss
 include Dockerfile
-recursive-include src/resources *
+
+# Include config files
 recursive-include configs *
+
+# Exclude test files
+prune tests
+prune *.egg-info
+prune __pycache__
+prune .pytest_cache
