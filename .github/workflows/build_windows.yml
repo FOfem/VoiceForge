@@ -1,0 +1,77 @@
+name: Build VoiceForge for Windows
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  release:
+    types: [ created ]
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+    
+    - name: Install Windows Build Tools
+      run: |
+        choco install innosetup -y
+        choco install upx -y
+    
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip setuptools wheel
+        pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+        pip install sounddevice soundfile numpy scipy
+        pip install TTS pyyaml requests
+        pip install pyinstaller pytest pytest-cov
+    
+    - name: Install application
+      run: |
+        pip install -e .
+    
+    - name: Run tests
+      run: |
+        pytest tests/ -v
+    
+    - name: Build with PyInstaller
+      run: |
+        pyinstaller --name="VoiceForge" --windowed --onefile --paths=src src/main.py
+    
+    - name: Create Windows Installer
+      run: |
+        if (Test-Path "installer.iss") {
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss
+        }
+    
+    - name: Validate build
+      run: |
+        if (Test-Path "dist\VoiceForge.exe") {
+          Write-Host "✅ Build successful!"
+          Get-ChildItem dist\
+        } else {
+          Write-Error "❌ Build failed!"
+          exit 1
+        }
+    
+    - name: Upload Windows Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: VoiceForge-Windows
+        path: |
+          dist/VoiceForge.exe
+          dist/VoiceForgeSetup.exe
+          dist/VoiceForge-Portable.zip
+        if-no-files-found: error
