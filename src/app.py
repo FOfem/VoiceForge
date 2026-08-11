@@ -21,7 +21,6 @@ except ImportError as e:
     print("On Windows/Linux: Install python-tk via your package manager")
     sys.exit(1)
 
-# ✅ FIX: Remove the circular import - import from utils, recorder, trainer only
 from .utils import ConfigManager, SystemInfo, FileManager, AudioUtils, logger
 from .recorder import AudioRecorder
 from .trainer import VoiceTrainer
@@ -88,10 +87,11 @@ class VoiceForgeApp(tk.Tk):
     
     def _setup_styles(self):
         """Configure ttk styles."""
+        # ✅ FIX: Create style object correctly
         style = ttk.Style(self)
         style.theme_use('clam')
         
-        # Colors
+        # Colors as a dictionary (NOT a callable)
         self.colors = {
             'primary': '#4A90D9',
             'secondary': '#2C3E50',
@@ -105,13 +105,14 @@ class VoiceForgeApp(tk.Tk):
             'card_bg': '#FFFFFF'
         }
         
-        # Configure styles
+        # ✅ FIX: Configure styles using the style object, not as a callable on self
         style.configure('Title.TLabel', font=('Helvetica', 28, 'bold'), foreground=self.colors['secondary'])
         style.configure('Subtitle.TLabel', font=('Helvetica', 14), foreground=self.colors['dark'])
         style.configure('Step.TLabel', font=('Helvetica', 18, 'bold'), foreground=self.colors['primary'])
         style.configure('Instruction.TLabel', font=('Helvetica', 12), wraplength=900)
         style.configure('Success.TLabel', font=('Helvetica', 16, 'bold'), foreground=self.colors['success'])
         style.configure('Warning.TLabel', font=('Helvetica', 12, 'bold'), foreground=self.colors['warning'])
+        style.configure('Error.TLabel', font=('Helvetica', 12, 'bold'), foreground=self.colors['danger'])
         
         style.configure('Primary.TButton', font=('Helvetica', 12, 'bold'), padding=10)
         style.configure('Nav.TButton', font=('Helvetica', 11), padding=8)
