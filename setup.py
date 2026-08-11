@@ -27,8 +27,9 @@ setup(
     author='F.Ofem',
     author_email='fofem@forracorp.com',
     license='MIT',
-    packages=find_packages('src'),
-    package_dir={'': 'src'},
+    # ✅ FIX: Correct package discovery - find packages in current directory
+    packages=find_packages(where='.', exclude=['tests', 'tests.*']),
+    package_dir={'': '.'},  # ✅ FIX: Use current directory as root
     include_package_data=True,
     install_requires=requirements,
     python_requires='>=3.9,<3.12',
