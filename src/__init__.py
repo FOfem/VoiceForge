@@ -8,8 +8,8 @@ __author__ = "Fredrick O. Ubi"
 __email__ = "fofem@forracorp.com"
 __license__ = "MIT"
 
-# ✅ FIX: Import main components
-from .main import VoiceForgeApp
+# ✅ FIX: Import VoiceForgeApp from app.py (where it's actually defined)
+from .app import VoiceForgeApp
 from .recorder import AudioRecorder
 from .trainer import VoiceTrainer
 
