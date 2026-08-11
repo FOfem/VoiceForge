@@ -2,8 +2,6 @@
 requires = [
     "setuptools>=61.0",
     "wheel>=0.40.0",
-    "numpy>=1.21.0",
-    "cython>=0.29.0"
 ]
 build-backend = "setuptools.build_meta"
 
@@ -13,7 +11,7 @@ version = "1.0.0"
 description = "Personal Voice Model Training Studio"
 readme = "README.md"
 requires-python = ">=3.9,<3.12"
-license = "MIT"  # ✅ FIX: Use simple string instead of table
+license = "MIT"
 authors = [
     {name = "F.Ofem", email = "fofem@forracorp.com"}
 ]
@@ -41,17 +39,11 @@ dev = [
 voiceforge = "src.main:main"
 
 [tool.setuptools]
-# ✅ FIX: Explicit package discovery
 packages = ["src"]
 package-dir = {"" = "."}
 
 [tool.setuptools.package-data]
 src = ["resources/**/*"]
-
-[tool.setuptools.dynamic]
-# ✅ FIX: Mark these as dynamic to avoid warnings
-version = {attr = "src.__version__"}
-classifiers = {file = ["pyproject.toml"]}
 
 [tool.pyinstaller]
 spec = "voiceforge.spec"
