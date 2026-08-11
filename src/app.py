@@ -163,7 +163,7 @@ class VoiceForgeApp(tk.Tk):
         
         title_label = ttk.Label(
             title_frame,
-            text="🎙️ VoiceForge",
+            text="VoiceForge",
             style='Title.TLabel'
         )
         title_label.pack(anchor=tk.W)
@@ -182,7 +182,7 @@ class VoiceForgeApp(tk.Tk):
         
         footer_text = ttk.Label(
             footer_frame,
-            text="VoiceForge • Created by F.Ofem • © 2026 ForraCorp",
+            text="VoiceForge - Created by F.Ofem - (c) 2026 ForraCorp",
             font=('Helvetica', 9),
             foreground='gray'
         )
@@ -195,7 +195,7 @@ class VoiceForgeApp(tk.Tk):
         
         self.back_button = ttk.Button(
             self.nav_frame,
-            text="← Back",
+            text="<- Back",
             style='Nav.TButton',
             command=self._go_back,
             state='disabled'
@@ -211,7 +211,7 @@ class VoiceForgeApp(tk.Tk):
         
         self.next_button = ttk.Button(
             self.nav_frame,
-            text="Next →",
+            text="Next ->",
             style='Primary.TButton',
             command=self._go_next,
             state='disabled'
@@ -243,7 +243,7 @@ class VoiceForgeApp(tk.Tk):
         
         welcome_title = ttk.Label(
             center_frame,
-            text="Welcome to VoiceForge! 🎤",
+            text="Welcome to VoiceForge!",
             style='Title.TLabel'
         )
         welcome_title.pack(pady=(0, 10))
@@ -265,7 +265,7 @@ Let's get started with just a few simple steps!"""
         
         get_started_btn = ttk.Button(
             center_frame,
-            text="🚀 Get Started →",
+            text="Get Started ->",
             style='Primary.TButton',
             command=self._start_workflow
         )
@@ -304,7 +304,7 @@ Let's get started with just a few simple steps!"""
         # Placeholder for recording options
         placeholder_label = ttk.Label(
             options_frame,
-            text="🎙️ Recording and 📁 Upload options will appear here",
+            text="Recording and Upload options will appear here",
             font=('Helvetica', 14)
         )
         placeholder_label.pack(expand=True)
@@ -324,11 +324,11 @@ Let's get started with just a few simple steps!"""
         self.back_button.config(state='normal' if self.current_step > 0 else 'disabled')
         
         if self.current_step == 0:
-            self.next_button.config(text="Next →", state='disabled')
+            self.next_button.config(text="Next ->", state='disabled')
         elif self.current_step == self.total_steps:
             self.next_button.config(state='disabled')
         else:
-            self.next_button.config(text="Next →", state='normal')
+            self.next_button.config(text="Next ->", state='normal')
     
     def _go_back(self):
         """Navigate to previous step."""
@@ -364,7 +364,7 @@ Let's get started with just a few simple steps!"""
             
             placeholder = ttk.Label(
                 step_frame,
-                text=f"This step will be implemented in the next version.",
+                text="This step will be implemented in the next version.",
                 font=('Helvetica', 14)
             )
             placeholder.pack(expand=True)
@@ -386,19 +386,19 @@ Let's get started with just a few simple steps!"""
             pass
         
         if issues:
-            warning_text = "System checks completed with warnings:\n\n" + "\n".join(f"• {issue}" for issue in issues)
+            warning_text = "System checks completed with warnings:\n\n" + "\n".join(f"* {issue}" for issue in issues)
             messagebox.showwarning("System Check", warning_text)
     
     def _show_about(self):
         """Show About dialog."""
-        about_text = """🎙️ VoiceForge
+        about_text = """VoiceForge
 Version 1.0.0
 
 Personal Voice Model Training Studio
 Powered by Coqui TTS
 
 Created by F.Ofem
-Copyright © 2026 ForraCorp
+Copyright (c) 2026 ForraCorp
 All rights reserved."""
         
         messagebox.showinfo("About VoiceForge", about_text)
