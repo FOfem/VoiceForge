@@ -13,7 +13,7 @@ version = "1.0.0"
 description = "Personal Voice Model Training Studio"
 readme = "README.md"
 requires-python = ">=3.9,<3.12"
-license = {text = "MIT"}
+license = "MIT"  # ✅ FIX: Use simple string instead of table
 authors = [
     {name = "F.Ofem", email = "fofem@forracorp.com"}
 ]
@@ -24,7 +24,8 @@ dependencies = [
     "numpy>=1.21.0",
     "scipy>=1.7.0",
     "TTS>=0.14.0",
-    "pyyaml>=6.0"
+    "pyyaml>=6.0",
+    "requests>=2.28.0"
 ]
 
 [project.optional-dependencies]
@@ -36,11 +37,21 @@ dev = [
     "pyinstaller>=5.0.0"
 ]
 
+[project.scripts]
+voiceforge = "src.main:main"
+
 [tool.setuptools]
+# ✅ FIX: Explicit package discovery
 packages = ["src"]
+package-dir = {"" = "."}
 
 [tool.setuptools.package-data]
 src = ["resources/**/*"]
+
+[tool.setuptools.dynamic]
+# ✅ FIX: Mark these as dynamic to avoid warnings
+version = {attr = "src.__version__"}
+classifiers = {file = ["pyproject.toml"]}
 
 [tool.pyinstaller]
 spec = "voiceforge.spec"
